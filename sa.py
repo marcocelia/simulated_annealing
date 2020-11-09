@@ -5,7 +5,7 @@ import math
 import random
 import matplotlib.pyplot as plt
 
-net = pd.read_csv('data/Zachary_Karate_club.txt', sep=' ', header=None)
+net = pd.read_csv('data/2110linearized.txt', sep=' ', header=None)
 
 vertices = sorted(set(list(net[0]) + list(net[1])))
 n = len(vertices)
@@ -25,7 +25,7 @@ for i in range(0, nsim-1):
 mm = np.mean(dis)
 T0 = 100*mm
 Tf = mm/100
-nsim = 60000
+nsim = 10000
 A = T0
 B = math.log(Tf/A)/nsim
 Temp = A*np.exp(B*np.arange(1,nsim+1))
@@ -35,7 +35,10 @@ sol = np.random.choice([1,2],n).tolist()
 solNEW = list(sol)
 modularityBEST = modularity(net=net, solC=solNEW)
 
+simstep = nsim*0.10
 for t in range(0, nsim):
+    if t % simstep == 0:
+        print(f"{t/100}%")
     nodeRAN = random.randint(0, n-1)
     solNEW[nodeRAN] = 2 if sol[nodeRAN] == 1 else 1
     modularityNEW = modularity(net=net, solC=solNEW)

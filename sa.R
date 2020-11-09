@@ -1,4 +1,4 @@
-net <- read.table("./data/Zachary_Karate_club.txt", quote="\"", comment.char="")
+net <- read.table("./data/2110linearized.txt", quote="\"", comment.char="")
 vertices=sort(unique(unlist(net)))
 n=length(vertices)
 
@@ -44,7 +44,7 @@ cmppysol<-function(rsol, pysol, flip=T){
 
 
 modularityVEC=c()
-nsim=600;
+nsim=20000;
 for(i in 1:nsim){
   sol=sample(c(1,2),n,replace=T)
   modularityVEC[i]=modularity(net,sol)
@@ -61,7 +61,7 @@ for(i in 1:(nsim-1)){
 mm=mean(dis)
 T0=100*mm
 Tf = mm/100
-nsim = 50000
+nsim = 150000
 A = T0
 B = log(Tf/A)/nsim
 Temp=A*exp(B*(1:nsim))
